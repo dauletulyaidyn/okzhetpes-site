@@ -312,3 +312,6 @@ footer .legal { border-top: 1px solid var(--line-d); padding-top: 24px; font-siz
   .hero h1 { font-size: clamp(54px, min(8.4vw, 12vh), 148px); }
 }
 @media (max-width: 760px) { .hero-facts { flex-wrap: wrap; } .hero-facts > div { flex: 1 1 40%; } }
+.nav a, .top .btn { white-space: nowrap; }
+@media (max-width: 1360px) { .top .wrap { gap: 20px; padding: 0 28px; } .nav a { letter-spacing: .14em; padding: 10px 8px; } .nav a::after { left: 8px; } .nav a:hover::after, .nav a.on::after { right: 8px; } .brand small { display: none; } }
+@media (max-width: 1100px) { .top .btn { display: none; } }
