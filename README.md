@@ -9,6 +9,7 @@
 | burabay.html | «Окжетпес», Бурабай |
 | almaty.html | Almaty Resort, Алматы |
 | issyk-kul.html | «Казахстан», Иссык-Куль (открытие 2026, предварительные заявки) |
+| essentuki.html | «Казахстан», Ессентуки (Кавказские Минеральные Воды, РФ) |
 | clients.html | Условия по сегментам: гости и семьи, госорганы, льготники, иностранцы, группы; правила отмены |
 | corporate.html | Коммерческое предложение для компаний: пакеты, сетка скидок, программы, шаги |
 
@@ -17,7 +18,7 @@
 ## Фото
 Пока вместо фото — рисованные иллюстрации. Чтобы появилось фото, положите файл с нужным именем в `assets/photos/`:
 
-home-hero.jpg · burabay-hero.jpg · burabay-card.jpg · burabay-pool.jpg · almaty-hero.jpg · almaty-card.jpg · almaty-thermal.jpg · issykkul-hero.jpg · issykkul-card.jpg · issykkul-cottage.jpg · clients-hero.jpg · corporate-hero.jpg
+home-hero.jpg · burabay-hero.jpg · burabay-card.jpg · burabay-pool.jpg · almaty-hero.jpg · almaty-card.jpg · almaty-thermal.jpg · issykkul-hero.jpg · issykkul-card.jpg · issykkul-cottage.jpg · essentuki-hero.jpg · essentuki-card.jpg · essentuki-water.jpg · clients-hero.jpg · corporate-hero.jpg
 
 Достать фото из презентаций: `python tools/extract_photos.py "<папка с презентациями>"` → `assets/photos/_inbox/`.
 
@@ -28,5 +29,5 @@ home-hero.jpg · burabay-hero.jpg · burabay-card.jpg · burabay-pool.jpg · alm
 ## Что требует утверждения
 - Все скидки и правила отмены — предложения (помечены на страницах).
 - Цены: везде «по запросу», пока нет утверждённого прайса.
-- Номер для заявок (`CONFIG.leadWhatsApp`) и телефоны Бурабая и Иссык-Куля.
+- Номер для заявок (`CONFIG.leadWhatsApp`) и телефоны Бурабая, Иссык-Куля и Ессентуков.
 - Данные по номерам (категории, площади) — сверить с презентациями.

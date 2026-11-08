@@ -6,6 +6,7 @@ const CONFIG = {
     almaty: ["+7 727 300 34 00", "+7 701 743 64 33"],
     burabay: ["[телефон отдела бронирования]"],
     issykkul: ["[телефон отдела бронирования]"],
+    essentuki: ["[телефон отдела бронирования]"],
   },
 };
 
@@ -14,6 +15,7 @@ const PAGES = [
   ["almaty.html", "Алматы"],
   ["burabay.html", "Бурабай"],
   ["issyk-kul.html", "Иссык-Куль"],
+  ["essentuki.html", "Ессентуки"],
   ["clients.html", "Клиентам"],
   ["corporate.html", "Корпоративным"],
 ];
@@ -37,9 +39,9 @@ function footer() {
   <footer><div class="wrap">
     <div class="cols">
       <div><h4>АО «ЛОК «Окжетпес»</h4>
-        <p>Сеть санаториев: Алматы, Бурабай, Иссык-Куль. Лечение, восстановление и отдых круглый год.</p></div>
+        <p>Сеть санаториев: Алматы, Бурабай, Иссык-Куль, Ессентуки. Лечение, восстановление и отдых круглый год.</p></div>
       <div><h4>Здравницы</h4>
-        <a href="almaty.html">Almaty Resort, Алматы</a><a href="burabay.html">«Окжетпес», Бурабай</a><a href="issyk-kul.html">«Казахстан», Иссык-Куль</a></div>
+        <a href="almaty.html">Almaty Resort, Алматы</a><a href="burabay.html">«Окжетпес», Бурабай</a><a href="issyk-kul.html">«Казахстан», Иссык-Куль</a><a href="essentuki.html">«Казахстан», Ессентуки</a></div>
       <div><h4>Клиентам</h4>
         <a href="clients.html#seg-individual">Гостям и семьям</a><a href="corporate.html">Корпоративным клиентам</a>
         <a href="clients.html#seg-gov">Государственным организациям</a><a href="clients.html#seg-benefit">Льготным категориям</a>
@@ -86,6 +88,16 @@ const ART = {
     <path d="M0 410 Q200 398 400 410 T800 405" stroke="#d6eef3" stroke-width="3" fill="none" opacity=".55"/>
     <path d="M0 470 Q200 458 400 470 T800 465" stroke="#d6eef3" stroke-width="2" fill="none" opacity=".35"/>
     <path d="M0 560 Q260 530 520 555 T800 545 V600 H0Z" fill="#e7d6b2"/></svg>`,
+  essentuki: `<svg viewBox="0 0 800 600" preserveAspectRatio="xMidYMid slice"><defs>
+    <linearGradient id="e1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#cfe0e6"/><stop offset="1" stop-color="#f3e9d6"/></linearGradient></defs>
+    <rect width="800" height="600" fill="url(#e1)"/>
+    <path d="M0 330 Q150 250 300 300 T600 270 T800 300 V600 H0Z" fill="#9db29b"/>
+    <path d="M520 300 L600 190 L660 300Z" fill="#b8c6cc"/><path d="M600 190 L620 220 L600 214 L585 230Z" fill="#fff"/>
+    <rect x="160" y="330" width="480" height="150" fill="#efe4cf"/>
+    <rect x="150" y="315" width="500" height="22" fill="#e1d1b2"/>
+    <g fill="#c9b68f">${[0, 1, 2, 3, 4, 5, 6].map(i => `<path d="M${185 + i * 66} 480 V385 a22 22 0 0 1 44 0 V480Z" fill="#8fa9a0"/>`).join("")}</g>
+    <path d="M0 480 H800 V600 H0Z" fill="#6f8d76"/>
+    <path d="M0 520 Q400 495 800 520 V600 H0Z" fill="#4c6d58"/></svg>`,
   spa: `<svg viewBox="0 0 800 600" preserveAspectRatio="xMidYMid slice">
     <rect width="800" height="600" fill="#e8efe9"/><rect y="330" width="800" height="270" fill="#9ccbc9"/>
     <path d="M0 360 Q200 340 400 360 T800 355" stroke="#e5f4f2" stroke-width="5" fill="none"/>
@@ -145,7 +157,7 @@ function leadBlock(resort, who) {
       </div>
       <div class="row2">
         <div class="fld"><label>Кто вы</label><select name="Тип клиента">${opt(["Частный гость / семья", "Компания", "Государственная организация", "Льготная категория", "Иностранный гость", "Группа / мероприятие"], who)}</select></div>
-        <div class="fld"><label>Здравница</label><select name="Здравница">${opt(["Пока не знаю — посоветуйте", "Алматы", "Бурабай", "Иссык-Куль", "Несколько / маршрут"], resort)}</select></div>
+        <div class="fld"><label>Здравница</label><select name="Здравница">${opt(["Пока не знаю — посоветуйте", "Алматы", "Бурабай", "Иссык-Куль", "Ессентуки", "Несколько / маршрут"], resort)}</select></div>
       </div>
       <div class="row2">
         <div class="fld"><label>Сколько человек</label><input name="Количество" type="number" min="1" value="1"></div>
@@ -275,7 +287,7 @@ function mountChrome() {
   window.addEventListener("scroll", onScroll, { passive: true }); onScroll();
   const hero = document.querySelector("body > section.hero");
   if (hero && !hero.classList.contains("short")) {
-    const words = ["Алматы", "Бурабай", "Иссык-Куль", "Лечение", "Восстановление", "Тишина", "Горный воздух", "Термальные воды"];
+    const words = ["Алматы", "Бурабай", "Иссык-Куль", "Ессентуки", "Лечение", "Восстановление", "Тишина", "Горный воздух", "Термальные воды"];
     const line = words.map(w => `<span>${w}</span><i>✦</i>`).join("");
     const m = document.createElement("div");
     m.className = "marquee";
