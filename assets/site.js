@@ -129,8 +129,9 @@ function mountTabs() {
     };
     btns.forEach(b => b.addEventListener("click", () => { show(b.dataset.seg); history.replaceState(null, "", "#" + b.dataset.seg); }));
     const fromHash = location.hash.slice(1);
-    show(box.querySelector("#" + CSS.escape(fromHash)) ? fromHash : btns[0].dataset.seg);
-    if (fromHash && box.querySelector("#" + CSS.escape(fromHash))) box.scrollIntoView();
+    const hit = fromHash ? box.querySelector("#" + CSS.escape(fromHash)) : null;
+    show(hit ? fromHash : btns[0].dataset.seg);
+    if (hit) box.scrollIntoView();
   });
 }
 

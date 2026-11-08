@@ -406,3 +406,32 @@ footer a:hover { color: var(--brass); }
 .hero-facts b { font-weight: 600; letter-spacing: 0; font-optical-sizing: none; font-variation-settings: "opsz" 6, "wght" 600; }
 .hero-facts span { color: #3d3b34; font-weight: 600; letter-spacing: .18em; }
 .hero .lead { color: #2f2e29; font-weight: 400; }
+
+/* ===== читаемость по всему сайту (08.11) =====
+   Bodoni Moda при крупном кегле автоматически берёт «дисплейный» оптический размер
+   с почти невидимыми волосными линиями. Фиксируем мелкий оптический размер — линии толще. */
+body { font-optical-sizing: none; font-variation-settings: "opsz" 9; font-weight: 400; }
+h1, h2, h3, h4, footer::before, .marquee div, .step::before, .grid-4 > .card::before,
+.resort::before, .route .arrow, details.faq summary, .pack .price, .terms td:first-child { font-optical-sizing: none; font-variation-settings: "opsz" 9; }
+h1, h2, footer::before { font-weight: 500; }
+:root { --mute: #5b574e; }
+.eyebrow, .pack .dur, .terms th, .fld label, footer h4, .seg-tabs button.on { color: #7d5f27; }
+.lead, details.faq p, .chip { color: #34322c; }
+.muted { color: var(--mute); }
+.hero .eyebrow { color: #7d5f27; }
+/* латунь для текста и кнопок с белым текстом — темнее, контраст ≥ 4.5 */
+.btn-gold, .top .btn, .top .btn-primary, .draft, .pack.hl::before, section.dark .btn-primary,
+.lead-form .btn-primary, .pack.hl .btn-primary { background: #85662b; border-color: #85662b; color: #fff; }
+.brand small, .brand-mark { color: #7d5f27; }
+:root { --brass: #85662b; --brass-2: #85662b; }
+section.dark .eyebrow, .hero .eyebrow { color: #7d5f27; }
+.offer-box .form-note, .pack.hl .form-note, .lead-form .form-note { color: var(--mute); }
+section.dark .grid-3 > .card, section.dark .grid-4 > .card, section.dark .card, section.dark .card h3 { color: var(--ink); border-color: var(--line); }
+:root { --brass: #765a24; --brass-2: #765a24; }
+.eyebrow, section.dark .eyebrow, .hero .eyebrow, .brand small, .brand-mark { color: #765a24; }
+.btn-gold, .top .btn, .top .btn-primary, .draft, .pack.hl::before, section.dark .btn-primary,
+.lead-form .btn-primary, .pack.hl .btn-primary { background: #7d5f27; border-color: #7d5f27; }
+.resort::after { background: linear-gradient(180deg, rgba(20, 20, 16, .15) 0%, rgba(20, 20, 16, 0) 25%, rgba(20, 20, 16, .35) 55%, rgba(20, 20, 16, .8) 100%); }
+.resort .tag, .resort::before { color: #f6e6c4; font-weight: 700; }
+.resort h3 { color: #fff; }
+.resort p { color: rgba(255, 255, 255, .9); }
