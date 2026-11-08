@@ -315,3 +315,89 @@ footer .legal { border-top: 1px solid var(--line-d); padding-top: 24px; font-siz
 .nav a, .top .btn { white-space: nowrap; }
 @media (max-width: 1360px) { .top .wrap { gap: 20px; padding: 0 28px; } .nav a { letter-spacing: .14em; padding: 10px 8px; } .nav a::after { left: 8px; } .nav a:hover::after, .nav a.on::after { right: 8px; } .brand small { display: none; } }
 @media (max-width: 1100px) { .top .btn { display: none; } }
+
+/* =====================================================================
+   v3 «светлая»: тот же элитный стиль (Bodoni, латунь, острые углы),
+   но светлые первые экраны, секции и подвал. Тёмная версия — style.v2-dark.css
+   ===================================================================== */
+:root { --ivory: #f7f3ec; --bone: #efe7da; --sand: #e7dcc8; --brass: #a8803f; --brass-2: #a8803f; --ink: #1b1c18; --line-d: rgba(27, 28, 24, .14); }
+body { background: var(--ivory); color: var(--ink); }
+
+/* шапка */
+.top { color: var(--ink); }
+.top.solid { background: rgba(247, 243, 236, .9); border-bottom-color: var(--line-d); }
+.nav a { color: rgba(27, 28, 24, .7); }
+.nav a:hover, .nav a.on { color: var(--ink); }
+.burger { color: var(--ink); border-color: var(--line-d); }
+.top .btn, .top .btn-primary { background: var(--brass); border-color: var(--brass); color: #fff; }
+.top .btn:hover { background: var(--ink); border-color: var(--ink); color: var(--ivory); }
+
+/* первый экран */
+.hero { background: var(--bone); color: var(--ink); }
+.hero .art svg { filter: saturate(.75) brightness(1.02) contrast(.95); }
+.hero::after { background: linear-gradient(90deg, rgba(247, 243, 236, .96) 0%, rgba(247, 243, 236, .8) 45%, rgba(247, 243, 236, .15) 100%), linear-gradient(180deg, rgba(247, 243, 236, .5) 0%, transparent 25%, rgba(247, 243, 236, .55) 100%); }
+.hero .lead { color: #4a4840; }
+.hero .eyebrow { color: var(--brass); }
+.hero-facts { border-top-color: var(--line-d); }
+.hero-facts > div { border-right-color: var(--line-d); }
+.hero-facts b { color: var(--ink); }
+.hero-facts span { color: #6c685e; }
+.hero .marquee { background: rgba(247, 243, 236, .7); }
+.btn-light, .hero .btn-ghost { color: var(--ink); border-color: rgba(27, 28, 24, .45); }
+.btn-light:hover { background: var(--ink); color: var(--ivory); }
+.btn-gold { color: #fff; }
+.btn-gold:hover { background: var(--ink); border-color: var(--ink); color: var(--ivory); }
+
+/* бегущая строка */
+.marquee { background: var(--sand); color: var(--ink); border-color: var(--line-d); }
+
+/* бывшие тёмные секции → тёплый песочный */
+section.dark { background: var(--sand); color: var(--ink); }
+section.dark .lead { color: #4a4840; }
+section.dark .muted { color: var(--mute); }
+section.dark .eyebrow { color: var(--brass); }
+section.dark .card { color: var(--ink); }
+section.dark .card:hover { background: rgba(255, 255, 255, .45); }
+section.dark .btn-ghost { color: var(--ink); border-color: var(--ink); }
+section.dark .btn-primary, .lead-form .btn-primary { color: #fff; }
+
+/* карточки здравниц: картинка светлее, текст на мягкой подложке */
+.resort { background: var(--bone); }
+.resort .art svg { filter: saturate(.8) brightness(.92); }
+.resort::after { background: linear-gradient(180deg, rgba(20, 20, 16, 0) 30%, rgba(20, 20, 16, .62)); }
+.resort .tag, .resort::before { color: #f1dcb0; }
+
+/* выделенный пакет и блок условий — белые с латунной рамкой */
+.pack.hl, .offer-box { background: #fff; color: var(--ink); box-shadow: inset 0 3px 0 var(--brass); }
+.offer-box h3 { color: var(--ink); }
+.offer-box .terms { color: var(--ink) !important; }
+.offer-box .terms th { color: var(--brass); }
+.pack.hl::before { color: #fff; }
+.pack.hl .btn-primary { color: #fff; }
+
+/* форма заявки */
+.lead-form { background: rgba(255, 255, 255, .55); border-color: var(--line-d); color: var(--ink); }
+.fld label { color: var(--brass); }
+.fld input, .fld select, .fld textarea { color: var(--ink); border-bottom-color: rgba(27, 28, 24, .25); }
+.fld input::placeholder, .fld textarea::placeholder { color: rgba(27, 28, 24, .35); }
+.form-note { color: var(--mute); }
+
+.feature .pic { background: var(--bone); }
+.feature .pic .art svg { filter: saturate(.75) brightness(1); }
+
+/* подвал */
+footer { background: var(--bone); color: #5d5a51; border-top: 1px solid var(--line); }
+footer::before { color: var(--ink); opacity: .92; }
+footer h4 { color: var(--brass); }
+footer a { color: #3a3a35; }
+footer a:hover { color: var(--brass); }
+
+.float-cta { background: #fff; color: var(--ink); }
+.float-cta:hover { color: #fff; }
+.draft { color: #fff; }
+::selection { color: #fff; }
+
+@media (max-width: 899px), (max-height: 619px) {
+  .top { background: rgba(247, 243, 236, .95); }
+  .nav { background: var(--ivory); border-bottom: 1px solid var(--line-d); }
+}
