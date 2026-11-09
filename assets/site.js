@@ -304,13 +304,32 @@ function mountChrome() {
    а при переходе на другую страницу сам выходит из него. Поэтому по кнопке
    сайт открывается во фрейме внутри полноэкранного слоя: переходы между
    страницами идут внутри фрейма, полный экран сохраняется. Выход — Esc. */
+/* Режим слайдов (только внутри презентации): каждая секция на весь экран,
+   прокрутка останавливается ровно на секции, листание стрелками/PageUp/PageDown/пробелом */
+function slideMode() {
+  document.documentElement.classList.add("present-mode");
+  const slides = () => [...document.querySelectorAll("body > section, footer")].filter(s => s.offsetHeight > 0);
+  const go = dir => {
+    const list = slides(), y = window.scrollY + 2;
+    const cur = list.reduce((a, s, k) => (s.offsetTop <= y ? k : a), 0);
+    const t = list[Math.max(0, Math.min(list.length - 1, cur + dir))];
+    if (t) window.scrollTo({ top: t.offsetTop, behavior: "smooth" });
+  };
+  document.addEventListener("keydown", e => {
+    if (["INPUT", "SELECT", "TEXTAREA"].includes(document.activeElement?.tagName)) return;
+    if (["ArrowDown", "PageDown", " ", "ArrowRight"].includes(e.key)) { e.preventDefault(); go(1); }
+    if (["ArrowUp", "PageUp", "ArrowLeft"].includes(e.key)) { e.preventDefault(); go(-1); }
+  });
+}
+
 function mountPresent() {
   const btn = document.getElementById("present-btn");
   if (!btn) return;
   const inFrame = window.self !== window.top;
   const fsOn = () => document.fullscreenElement || document.webkitFullscreenElement;
   const canFs = document.fullscreenEnabled || document.webkitFullscreenEnabled;
-  if (inFrame || !canFs) return; // внутри презентации и на iPhone кнопку не показываем
+  if (inFrame) { slideMode(); return; } // внутри презентации: каждый блок — отдельный слайд
+  if (!canFs) return; // на iPhone кнопку не показываем
   btn.hidden = false;
 
   btn.addEventListener("click", () => {
