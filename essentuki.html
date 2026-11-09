@@ -8,7 +8,7 @@
 <meta name="description" content="Санаторий «Казахстан» в Ессентуках: питьевое лечение минеральными водами, бальнеология, лечение пищеварения и обмена веществ, досуг и анимация.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,600;0,6..96,700;1,6..96,400&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/style.css?v=17">
+<link rel="stylesheet" href="assets/style.css?v=21">
 </head>
 <body>
 <div id="site-header"></div>
@@ -56,24 +56,55 @@
   </div>
 </section>
 
-<section id="programs">
+<section id="programs" class="compact">
   <div class="wrap">
-    <div class="sec-head rv"><span class="eyebrow">Программы</span><h2>Готовые программы</h2>
-      <p class="lead">Классический курс питьевого лечения — от 12 до 21 дня. Окончательный план составляет врач.</p></div>
-    <div class="packs">
-      <div class="pack hl rv"><span class="dur">от 12 дней</span><h3>«Минеральные воды»</h3>
-        <div class="price">Цена по запросу<small>проживание + питание + лечение</small></div>
-        <ul class="ticks"><li>Осмотр и назначение врача</li><li>Питьевой курс минеральных вод</li><li>Бальнеологические процедуры</li><li>Диетическое питание</li></ul>
-        <a class="btn btn-primary" href="#lead">Узнать стоимость</a></div>
-      <div class="pack rv"><span class="dur">от 14 дней</span><h3>«Обмен веществ»</h3>
-        <div class="price">Цена по запросу<small>проживание + питание + лечение</small></div>
-        <ul class="ticks"><li>Диетолог и индивидуальное меню</li><li>Питьевое лечение</li><li>Лечебная физкультура</li><li>Рекомендации после выезда</li></ul>
-        <a class="btn btn-ghost" href="#lead">Узнать стоимость</a></div>
-      <div class="pack rv"><span class="dur">от 10 дней</span><h3>«Отдых с пользой»</h3>
-        <div class="price">Цена по запросу<small>проживание + питание + досуг</small></div>
-        <ul class="ticks"><li>Базовые процедуры по назначению</li><li>Экскурсии по Кавминводам</li><li>Анимация и вечерняя программа</li><li>Подходит для семей</li></ul>
-        <a class="btn btn-ghost" href="#lead">Узнать стоимость</a></div>
+    <div class="sec-head center rv"><span class="eyebrow">Путёвки и цены</span><h2>Программы лечения</h2>
+      <p class="lead">Цены за сутки на человека, по данным официального сайта санатория (kazakhstan-kmv.ru) на 9 ноября 2026 г. Сейчас действует акция «С нами теплее — 15%» на осень и начало зимы.</p></div>
+    <div class="packs packs-6">
+      <div class="pack hl rv"><span class="dur">От 7 до 21 дня</span><h3>Путёвка «Общетерапевтическая»</h3>
+        <div class="price">от 9 600 ₽<small>за сутки</small></div>
+        <p class="muted">Проживание, питание «меню-заказ», осмотр врача и лечение по назначению</p>
+        <a class="btn btn-primary" href="#lead">Забронировать</a></div>
+      <div class="pack rv"><span class="dur">от 1 дня</span><h3>Путёвка «Оздоровительная»</h3>
+        <div class="price">от 7 900 ₽<small>за сутки</small></div>
+        <p class="muted">Короткий оздоровительный курс без длительного лечения</p>
+        <a class="btn btn-ghost" href="#lead">Забронировать</a></div>
+      <div class="pack rv"><span class="dur">От 7 до 21 дня</span><h3>Путёвка «Общетерапевтическая Премиум»</h3>
+        <div class="price">от 11 300 ₽<small>за сутки</small></div>
+        <p class="muted">Расширенный набор процедур и диагностики</p>
+        <a class="btn btn-ghost" href="#lead">Забронировать</a></div>
+      <div class="pack rv"><span class="dur">От 7 до 21 дня</span><h3>Путёвка «Оптима»</h3>
+        <div class="price">от 8 600 ₽<small>за сутки</small></div>
+        <p class="muted">Базовый лечебный курс по оптимальной цене</p>
+        <a class="btn btn-ghost" href="#lead">Забронировать</a></div>
+      <div class="pack rv"><span class="dur">От 7 до 21 дня</span><h3>Путёвка «Детская общетерапевтическая»</h3>
+        <div class="price">от 7 700 ₽<small>за сутки</small></div>
+        <p class="muted">Лечебная программа для детей</p>
+        <a class="btn btn-ghost" href="#lead">Забронировать</a></div>
+      <div class="pack rv"><span class="dur">От 1 до 3 дней</span><h3>Программа «Тур выходного дня»</h3>
+        <div class="price">от 4 200 ₽<small>за сутки</small></div>
+        <p class="muted">Отдых и SPA на выходные</p>
+        <a class="btn btn-ghost" href="#lead">Забронировать</a></div>
     </div>
+  </div>
+</section>
+
+<section class="alt compact" id="rooms">
+  <div class="wrap">
+    <div class="sec-head center rv"><span class="eyebrow">Номерной фонд</span><h2>Номера и цены</h2>
+      <p class="lead">Все номера с видом на парк площадью 7,7 га. Цена — от, за сутки.</p></div>
+    <div class="rv" style="overflow-x:auto">
+      <table class="terms">
+        <tr><th>Категория</th><th>Площадь</th><th>Размещение</th><th>Цена</th></tr>
+        <tr><td>Двухместный номер I категории</td><td>15 м²</td><td>2 взрослых + 1 ребёнок</td><td><b>от 9 600 ₽</b></td></tr>
+        <tr><td>Одноместный номер I категории</td><td>15 м²</td><td>1 взрослый + 1 ребёнок</td><td><b>от 11 800 ₽</b></td></tr>
+        <tr><td>Люкс двухкомнатный</td><td>39 м²</td><td>2 взрослых + 2 детей</td><td><b>от 11 700 ₽</b></td></tr>
+        <tr><td>Люкс трёхкомнатный</td><td>46 м²</td><td>2 взрослых + 2 детей</td><td><b>от 13 300 ₽</b></td></tr>
+        <tr><td>Люкс четырёхкомнатный</td><td>100 м²</td><td>3 взрослых + 2 детей</td><td><b>от 15 400 ₽</b></td></tr>
+        <tr><td>Люкс «Президентский»</td><td>138 м²</td><td>4 взрослых + 2 детей</td><td><b>от 19 900 ₽</b></td></tr>
+      </table>
+    </div>
+    <p class="muted" style="margin-top:14px;font-size:13px">Окончательная стоимость зависит от дат, программы и количества гостей — уточняйте при бронировании.</p>
   </div>
 </section>
 
@@ -88,6 +119,6 @@
 
 <div id="lead-slot" data-resort="Ессентуки"></div>
 <div id="site-footer"></div>
-<script src="assets/site.js?v=17"></script>
+<script src="assets/site.js?v=21"></script>
 </body>
 </html>

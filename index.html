@@ -8,12 +8,12 @@
 <meta name="description" content="Сеть санаториев АО «ЛОК «Окжетпес»: лечение, восстановление и отдых в Алматы, Бурабае, на Иссык-Куле и в Ессентуках. Программы для гостей, семей, компаний и государственных организаций.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,600;0,6..96,700;1,6..96,400&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/style.css?v=17">
+<link rel="stylesheet" href="assets/style.css?v=21">
 </head>
 <body>
 <div id="site-header"></div>
 
-<section class="hero">
+<section class="hero hero-compact">
   <div class="art" data-art="burabay"></div>
   <div class="photo" data-photo="assets/photos/home-hero.jpg"></div>
   <div class="wrap">
@@ -34,67 +34,61 @@
   </div>
 </section>
 
-<section id="about">
-  <div class="wrap grid-2">
-    <div class="rv">
-      <span class="eyebrow">О нас</span>
-      <h2>Санаторное лечение с государственными стандартами качества</h2>
-      <p class="lead">АО «ЛОК «Окжетпес» объединяет здравницы с многолетней историей. Каждая работает круглый год и имеет свой природный лечебный фактор: климат и кумыс Бурабая, термальную воду и грязи Алматы, горно-морской климат Иссык-Куля, минеральные воды Ессентуков.</p>
-      <p>Мы не продаём «просто номер». Гость получает путёвку, в которой уже собраны проживание, питание под назначение врача и программа процедур. Врач осматривает при заезде, составляет индивидуальный план и следит за результатом до выезда.</p>
-      <div class="btn-row"><a class="btn btn-ghost" href="clients.html">Условия для разных гостей</a></div>
-    </div>
-    <div class="grid-2 rv" style="gap:16px">
-      <div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-4.5-7-11a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 6.5-7 11-7 11z"/></svg></div><h3>Врачи</h3><p class="muted">Терапевты, кардиологи, неврологи, эндокринологи, гинекологи, реабилитологи, диетологи.</p></div>
-      <div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3c3 4 6 7 6 11a6 6 0 0 1-12 0c0-4 3-7 6-11z"/></svg></div><h3>Природа</h3><p class="muted">Термальные и минеральные воды, лечебные грязи, кумыс, горный и сосновый климат.</p></div>
-      <div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 11h16M6 11V7a6 6 0 0 1 12 0v4M5 11v9h14v-9"/></svg></div><h3>Питание</h3><p class="muted">Диетические столы по назначению врача, рестораны и бары для отдыха.</p></div>
-      <div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div><h3>Круглый год</h3><p class="muted">Все здравницы принимают гостей в любой сезон.</p></div>
+<div class="pickbar-wrap"><form class="pickbar wrap" id="pickbar">
+  <div class="fld"><label>Здравница</label><select name="Здравница"><option>Пока не знаю — посоветуйте</option><option>Алматы</option><option>Бурабай</option><option>Иссык-Куль</option><option>Ессентуки</option></select></div>
+  <div class="fld"><label>Заезд</label><input type="date" name="Заезд"></div>
+  <div class="fld"><label>Выезд</label><input type="date" name="Выезд"></div>
+  <div class="fld"><label>Гости</label><select name="Гости"><option>1 взрослый</option><option selected>2 взрослых</option><option>2 взрослых + ребёнок</option><option>Семья 4+</option><option>Группа / организация</option></select></div>
+  <button class="btn btn-gold" type="submit">Подобрать программу</button>
+</form></div>
+
+<section id="about" class="compact">
+  <div class="wrap">
+    <div class="sec-head center rv"><span class="eyebrow">Почему мы</span><h2>У нас есть всё для вашего здоровья</h2></div>
+    <div class="perks">
+      <div class="perk rv"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-4.5-7-11a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 6.5-7 11-7 11z"/></svg></span><span>Врач при заезде и индивидуальный план</span></div>
+      <div class="perk rv"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c3 4 6 7 6 11a6 6 0 0 1-12 0c0-4 3-7 6-11z"/></svg></span><span>Термальные и минеральные воды</span></div>
+      <div class="perk rv"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 20h14M7 20c0-5 2-8 5-8s5 3 5 8M9 8a3 3 0 0 1 6 0"/></svg></span><span>Лечебные грязи и кумыс</span></div>
+      <div class="perk rv"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11h16M6 11V7a6 6 0 0 1 12 0v4M5 11v9h14v-9"/></svg></span><span>Питание по назначению врача</span></div>
+      <div class="perk rv"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17c2 0 2 1.5 4.5 1.5S10 17 12 17s2 1.5 4.5 1.5S19 17 21 17M7 14V5a2 2 0 0 1 4 0M13 14V5a2 2 0 0 1 4 0M7 9h6"/></svg></span><span>Бассейны, SPA и фитнес</span></div>
+      <div class="perk rv"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l2-5 4 10 2-5h6"/></svg></span><span>Диагностика и check-up</span></div>
+      <div class="perk rv"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20l6-11 4 7 3-4 5 8z"/></svg></span><span>Горы, сосны, озёра — круглый год</span></div>
+      <div class="perk rv"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="7" r="2.5"/><circle cx="16" cy="9" r="2"/><path d="M4 20v-3a4 4 0 0 1 8 0v3M13 20v-2.5a3 3 0 0 1 6 0V20"/></svg></span><span>Условия для детей и семей</span></div>
     </div>
   </div>
 </section>
 
-<section class="alt" id="resorts">
+<section class="alt compact" id="resorts">
+  <div class="wrap">
+    <div class="sec-head center rv"><span class="eyebrow">Наши здравницы</span><h2>Выберите свой климат и программу</h2></div>
+    <div class="rcards">
+      <div class="rcard rv">
+        <a class="rpic" href="almaty.html"><div class="art" data-art="almaty"></div><div class="photo" data-photo="assets/photos/almaty-card.jpg"></div><span class="tag">Алматы · Казахстан</span></a>
+        <div class="rbody"><h3><a href="almaty.html">Almaty Resort</a></h3><ul class="facts"><li>Термальная вода 42 °C, грязи</li><li>Диагностика, реабилитация, check-up</li><li>Суставы, сердце, женское здоровье</li></ul>
+          <div class="rbtns"><a class="btn btn-gold" href="#lead" data-pick="Алматы">Подобрать</a><a class="lnk" href="almaty.html">Подробнее</a></div></div>
+      </div>
+      <div class="rcard rv">
+        <a class="rpic" href="burabay.html"><div class="art" data-art="burabay"></div><div class="photo" data-photo="assets/photos/burabay-card.jpg"></div><span class="tag">Бурабай · Казахстан</span></a>
+        <div class="rbody"><h3><a href="burabay.html">«Окжетпес», Бурабай</a></h3><ul class="facts"><li>Сосновый бор и озеро Аулиеколь</li><li>Радон, грязи Балпаш-Сор, кумыс</li><li>Дыхание, сердце, восстановление</li></ul>
+          <div class="rbtns"><a class="btn btn-gold" href="#lead" data-pick="Бурабай">Подобрать</a><a class="lnk" href="burabay.html">Подробнее</a></div></div>
+      </div>
+      <div class="rcard rv">
+        <a class="rpic" href="issyk-kul.html"><div class="art" data-art="issykkul"></div><div class="photo" data-photo="assets/photos/issykkul-card.jpg"></div><span class="tag">Иссык-Куль · Кыргызстан</span></a>
+        <div class="rbody"><h3><a href="issyk-kul.html">«Казахстан», Иссык-Куль</a></h3><ul class="facts"><li>Новый курорт 5★, открытие 2026</li><li>Горное озеро, 17,5 га, коттеджи</li><li>Восстановление и отдых</li></ul>
+          <div class="rbtns"><a class="btn btn-gold" href="#lead" data-pick="Иссык-Куль">Подобрать</a><a class="lnk" href="issyk-kul.html">Подробнее</a></div></div>
+      </div>
+      <div class="rcard rv">
+        <a class="rpic" href="essentuki.html"><div class="art" data-art="essentuki"></div><div class="photo" data-photo="assets/photos/essentuki-card.jpg"></div><span class="tag">КМВ · Россия</span></a>
+        <div class="rbody"><h3><a href="essentuki.html">«Казахстан», Ессентуки</a></h3><ul class="facts"><li>Минеральные воды Ессентуков</li><li>Питьевое лечение, бальнеология</li><li>ЖКТ, обмен веществ, диета</li><li><b>Путёвки от 4 200 ₽ / сутки</b></li></ul>
+          <div class="rbtns"><a class="btn btn-gold" href="#lead" data-pick="Ессентуки">Подобрать</a><a class="lnk" href="essentuki.html">Подробнее</a></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="compact">
   <div class="wrap">
     <div class="sec-head center rv">
-      <span class="eyebrow">Наши здравницы</span>
-      <h2>Выберите свой климат и свою программу</h2>
-      <p class="lead">Каждая здравница сильна в своём направлении. Мы подскажем, куда ехать именно вам, — или соберём маршрут по нескольким.</p>
-    </div>
-    <div class="resorts">
-      <a class="resort rv" href="almaty.html">
-        <div class="art" data-art="almaty"></div><div class="photo" data-photo="assets/photos/almaty-card.jpg"></div>
-        <div class="body"><span class="tag">Алматы · Казахстан</span>
-          <h3>Almaty Resort</h3>
-          <p>Клинический санаторий: диагностика, бальнеотерапия, реабилитация и 60+ процедур у подножия гор. Сердце, суставы, женское здоровье.</p>
-          <span class="more">Подробнее →</span></div>
-      </a>
-      <a class="resort rv" href="burabay.html">
-        <div class="art" data-art="burabay"></div><div class="photo" data-photo="assets/photos/burabay-card.jpg"></div>
-        <div class="body"><span class="tag">Акмолинская область · Казахстан</span>
-          <h3>«Окжетпес», Бурабай</h3>
-          <p>Климатический курорт на озере Аулиеколь: радоновый источник, грязи Балпаш-Сор, кумыс. Дыхание, сердце, восстановление после стресса.</p>
-          <span class="more">Подробнее →</span></div>
-      </a>
-      <a class="resort rv" href="issyk-kul.html">
-        <div class="art" data-art="issykkul"></div><div class="photo" data-photo="assets/photos/issykkul-card.jpg"></div>
-        <div class="body"><span class="tag">Иссык-Куль · Кыргызстан · открытие 2026</span>
-          <h3>«Казахстан», Иссык-Куль</h3>
-          <p>Новый пятизвёздочный курорт на берегу горного озера: 17,5 га, основной корпус и коттеджи. Лечение, восстановление и отдых круглый год.</p>
-          <span class="more">Подробнее →</span></div>
-      </a>
-      <a class="resort rv" href="essentuki.html">
-        <div class="art" data-art="essentuki"></div><div class="photo" data-photo="assets/photos/essentuki-card.jpg"></div>
-        <div class="body"><span class="tag">Кавказские Минеральные Воды · Россия</span>
-          <h3>«Казахстан», Ессентуки</h3>
-          <p>Казахстанская здравница на знаменитом бальнеологическом курорте: питьевое лечение водами Ессентуков, бальнеология, диета и насыщенный досуг.</p>
-          <span class="more">Подробнее →</span></div>
-      </a>
-    </div>
-  </div>
-</section>
-
-<section>
-  <div class="wrap">
-    <div class="sec-head rv">
       <span class="eyebrow">Направления лечения</span>
       <h2>С чем мы помогаем</h2>
     </div>
@@ -111,7 +105,7 @@
   </div>
 </section>
 
-<section class="alt">
+<section class="alt compact">
   <div class="wrap">
     <div class="sec-head center rv">
       <span class="eyebrow">Для кого</span>
@@ -129,7 +123,7 @@
   </div>
 </section>
 
-<section class="dark">
+<section class="dark compact">
   <div class="wrap">
     <div class="sec-head rv">
       <span class="eyebrow">Только у сети</span>
@@ -146,7 +140,7 @@
   </div>
 </section>
 
-<section>
+<section class="compact">
   <div class="wrap">
     <div class="sec-head center rv"><span class="eyebrow">Как это работает</span><h2>От заявки до результата</h2></div>
     <div class="steps">
@@ -158,7 +152,24 @@
   </div>
 </section>
 
-<section class="alt">
+<section class="compact">
+  <div class="wrap">
+    <div class="sec-head center rv"><span class="eyebrow">Фотографии</span><h2>Как у нас</h2></div>
+    <div class="strip">
+      <a href="almaty.html#gallery"><img src="assets/photos/almaty/t/territory-01.jpg" alt="" loading="lazy"></a>
+      <a href="almaty.html#gallery"><img src="assets/photos/almaty/t/spa-01.jpg" alt="" loading="lazy"></a>
+      <a href="almaty.html#gallery"><img src="assets/photos/almaty/t/rooms-02.jpg" alt="" loading="lazy"></a>
+      <a href="almaty.html#gallery"><img src="assets/photos/almaty/t/spa-02.jpg" alt="" loading="lazy"></a>
+      <a href="almaty.html#gallery"><img src="assets/photos/almaty/t/territory-05.jpg" alt="" loading="lazy"></a>
+      <a href="almaty.html#gallery"><img src="assets/photos/almaty/t/food-01.jpg" alt="" loading="lazy"></a>
+      <a href="almaty.html#gallery"><img src="assets/photos/almaty/t/rooms-08.jpg" alt="" loading="lazy"></a>
+      <a href="almaty.html#gallery"><img src="assets/photos/almaty/t/events-01.jpg" alt="" loading="lazy"></a>
+    </div>
+    <div class="center-btn"><a class="btn btn-ghost" href="almaty.html#gallery">Больше фотографий</a></div>
+  </div>
+</section>
+
+<section class="alt compact">
   <div class="wrap grid-2">
     <div class="rv">
       <span class="eyebrow">Вопросы</span>
@@ -177,6 +188,6 @@
 
 <div id="lead-slot"></div>
 <div id="site-footer"></div>
-<script src="assets/site.js?v=17"></script>
+<script src="assets/site.js?v=21"></script>
 </body>
 </html>

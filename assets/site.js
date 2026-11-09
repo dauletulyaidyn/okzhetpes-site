@@ -348,15 +348,15 @@ function mountMedia() {
     const d = JSON.parse(document.getElementById(box.dataset.media).textContent);
     const dir = "assets/photos/almaty/";
     const cats = Object.entries(d.cats);
-    box.innerHTML = `<div class="gal-tabs">${[["all", "Все"], ...cats].map(([k, l]) => `<button type="button" data-c="${k}">${l}</button>`).join("")}</div>
+    box.innerHTML = `<div class="gal-tabs">${cats.map(([k, l]) => `<button type="button" data-c="${k}">${l}</button>`).join("")}</div>
       <div class="gal-grid">${d.photos.map(p => `<a href="${dir}${p.f}" data-c="${p.c}"><img src="${dir}t/${p.f}" alt="${d.cats[p.c]}" loading="lazy"></a>`).join("")}</div>`;
     const tiles = [...box.querySelectorAll(".gal-grid a")];
     const pick = c => {
       box.querySelectorAll(".gal-tabs button").forEach(b => b.classList.toggle("on", b.dataset.c === c));
-      tiles.forEach(t => { t.hidden = c !== "all" && t.dataset.c !== c; });
+      tiles.forEach(t => { t.hidden = t.dataset.c !== c; });
     };
     box.querySelectorAll(".gal-tabs button").forEach(b => b.addEventListener("click", () => pick(b.dataset.c)));
-    pick("all");
+    pick(cats[0][0]);
 
     // Просмотр на весь экран: стрелки, Esc, свайп
     let cur = 0, lb = null;
@@ -409,8 +409,24 @@ function mountMedia() {
   });
 }
 
+/* ---------- Панель подбора и кнопки «Подобрать» на главной ---------- */
+function mountPick() {
+  const bar = document.getElementById("pickbar");
+  if (bar) bar.addEventListener("submit", e => {
+    e.preventDefault();
+    const lines = ["Подбор программы с сайта"];
+    for (const [k, v] of new FormData(bar).entries()) if (String(v).trim()) lines.push(`${k}: ${v}`);
+    window.open(`https://wa.me/${CONFIG.leadWhatsApp}?text=${encodeURIComponent(lines.join("\n"))}`, "_blank", "noopener");
+  });
+  // «Подобрать» в карточке здравницы — подставить её в форму заявки
+  document.querySelectorAll("[data-pick]").forEach(a => a.addEventListener("click", () => {
+    const sel = document.querySelector('#lead select[name="Здравница"]');
+    if (sel) sel.value = a.dataset.pick;
+  }));
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("site-header").outerHTML = header();
   document.getElementById("site-footer").outerHTML = footer();
-  mountChrome(); mountArt(); mountServices(); mountTabs(); mountForms(); mountReveal(); mountSlides(); mountPresent(); mountMedia();
+  mountChrome(); mountArt(); mountServices(); mountTabs(); mountForms(); mountReveal(); mountSlides(); mountPresent(); mountMedia(); mountPick();
 });
