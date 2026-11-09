@@ -30,6 +30,7 @@ function header() {
       <span><b>Окжетпес</b><small>Сеть здравниц</small></span></a>
     <nav class="nav" id="nav">${links}</nav>
     <button class="burger" onclick="document.getElementById('nav').classList.toggle('open')">Меню</button>
+    <button class="present-btn" id="present-btn" type="button" hidden title="Открыть сайт на весь экран">▶ Презентация</button>
     <a class="btn btn-primary" href="#lead">Подобрать программу</a>
   </div></header>`;
 }
@@ -297,8 +298,51 @@ function mountChrome() {
   }
 }
 
+/* ---------- Режим презентации ----------
+   Браузер не даёт сайту уйти в полный экран без нажатия пользователя,
+   а при переходе на другую страницу сам выходит из него. Поэтому по кнопке
+   сайт открывается во фрейме внутри полноэкранного слоя: переходы между
+   страницами идут внутри фрейма, полный экран сохраняется. Выход — Esc. */
+function mountPresent() {
+  const btn = document.getElementById("present-btn");
+  if (!btn) return;
+  const inFrame = window.self !== window.top;
+  const fsOn = () => document.fullscreenElement || document.webkitFullscreenElement;
+  const canFs = document.fullscreenEnabled || document.webkitFullscreenEnabled;
+  if (inFrame || !canFs) return; // внутри презентации и на iPhone кнопку не показываем
+  btn.hidden = false;
+
+  btn.addEventListener("click", () => {
+    const box = document.createElement("div");
+    box.className = "present-box";
+    const frame = document.createElement("iframe");
+    frame.src = location.href;
+    frame.title = "Презентация";
+    const hint = document.createElement("div");
+    hint.className = "present-hint";
+    hint.textContent = "Выход из презентации — Esc";
+    box.append(frame, hint);
+    document.body.appendChild(box);
+    const req = box.requestFullscreen || box.webkitRequestFullscreen;
+    Promise.resolve(req.call(box)).catch(() => box.remove());
+    setTimeout(() => hint.classList.add("gone"), 3500);
+
+    const onChange = () => {
+      if (fsOn()) return;
+      let here = location.href;
+      try { here = frame.contentWindow.location.href; } catch (e) {}
+      box.remove();
+      document.removeEventListener("fullscreenchange", onChange);
+      document.removeEventListener("webkitfullscreenchange", onChange);
+      if (here !== location.href) location.href = here; // остаёмся на странице, где закончили
+    };
+    document.addEventListener("fullscreenchange", onChange);
+    document.addEventListener("webkitfullscreenchange", onChange);
+  });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("site-header").outerHTML = header();
   document.getElementById("site-footer").outerHTML = footer();
-  mountChrome(); mountArt(); mountServices(); mountTabs(); mountForms(); mountReveal(); mountSlides();
+  mountChrome(); mountArt(); mountServices(); mountTabs(); mountForms(); mountReveal(); mountSlides(); mountPresent();
 });

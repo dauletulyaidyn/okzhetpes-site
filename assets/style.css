@@ -435,3 +435,13 @@ section.dark .grid-3 > .card, section.dark .grid-4 > .card, section.dark .card, 
 .resort .tag, .resort::before { color: #f6e6c4; font-weight: 700; }
 .resort h3 { color: #fff; }
 .resort p { color: rgba(255, 255, 255, .9); }
+
+/* режим презентации */
+.present-btn { margin-left: 4px; padding: 13px 16px; background: transparent; color: var(--ink); border: 1px solid var(--line-d); font: 600 10px/1 var(--sans); letter-spacing: .2em; text-transform: uppercase; cursor: pointer; white-space: nowrap; transition: border-color .3s, color .3s; }
+.present-btn:hover { border-color: var(--brass); color: var(--brass); }
+.present-btn[hidden] { display: none; }
+@media (max-width: 899px), (max-height: 619px) { .present-btn { display: none; } }
+.present-box { position: fixed; inset: 0; z-index: 1000; background: var(--ivory); }
+.present-box iframe { width: 100%; height: 100%; border: 0; display: block; }
+.present-hint { position: absolute; top: 18px; left: 50%; transform: translateX(-50%); background: rgba(27, 28, 24, .82); color: #fff; font: 500 12px/1 var(--sans); letter-spacing: .08em; padding: 11px 18px; pointer-events: none; transition: opacity .6s; }
+.present-hint.gone { opacity: 0; }
