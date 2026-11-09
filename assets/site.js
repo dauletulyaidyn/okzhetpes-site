@@ -115,7 +115,8 @@ function mountArt() {
   // Фото подставляются, только если файл реально существует
   document.querySelectorAll("[data-photo]").forEach(el => {
     const img = new Image();
-    img.onload = () => el.style.setProperty("--img", `url("${el.dataset.photo}")`);
+    // Абсолютный адрес: относительный url() в CSS-переменной считался бы от папки assets/
+    img.onload = () => el.style.setProperty("--img", `url("${img.src}")`);
     img.src = el.dataset.photo;
   });
 }
@@ -341,8 +342,75 @@ function mountPresent() {
   });
 }
 
+/* ---------- Фотогалерея и видео (данные — JSON в странице) ---------- */
+function mountMedia() {
+  document.querySelectorAll(".gal[data-media]").forEach(box => {
+    const d = JSON.parse(document.getElementById(box.dataset.media).textContent);
+    const dir = "assets/photos/almaty/";
+    const cats = Object.entries(d.cats);
+    box.innerHTML = `<div class="gal-tabs">${[["all", "Все"], ...cats].map(([k, l]) => `<button type="button" data-c="${k}">${l}</button>`).join("")}</div>
+      <div class="gal-grid">${d.photos.map(p => `<a href="${dir}${p.f}" data-c="${p.c}"><img src="${dir}t/${p.f}" alt="${d.cats[p.c]}" loading="lazy"></a>`).join("")}</div>`;
+    const tiles = [...box.querySelectorAll(".gal-grid a")];
+    const pick = c => {
+      box.querySelectorAll(".gal-tabs button").forEach(b => b.classList.toggle("on", b.dataset.c === c));
+      tiles.forEach(t => { t.hidden = c !== "all" && t.dataset.c !== c; });
+    };
+    box.querySelectorAll(".gal-tabs button").forEach(b => b.addEventListener("click", () => pick(b.dataset.c)));
+    pick("all");
+
+    // Просмотр на весь экран: стрелки, Esc, свайп
+    let cur = 0, lb = null;
+    const visible = () => tiles.filter(t => !t.hidden);
+    const show = i => {
+      const v = visible(); cur = (i + v.length) % v.length;
+      lb.querySelector("img").src = v[cur].href;
+      lb.querySelector(".lb-n").textContent = `${cur + 1} / ${v.length}`;
+    };
+    const onKey = e => {
+      if (e.key === "Escape") close();
+      if (e.key === "ArrowRight") show(cur + 1);
+      if (e.key === "ArrowLeft") show(cur - 1);
+    };
+    const close = () => { if (lb) lb.remove(); lb = null; document.removeEventListener("keydown", onKey); };
+    tiles.forEach(t => t.addEventListener("click", e => {
+      e.preventDefault();
+      lb = document.createElement("div"); lb.className = "lb";
+      lb.innerHTML = `<img alt=""><button class="lb-x" aria-label="Закрыть">×</button><button class="lb-p" aria-label="Назад">‹</button><button class="lb-nx" aria-label="Вперёд">›</button><span class="lb-n"></span>`;
+      document.body.appendChild(lb);
+      lb.querySelector(".lb-x").onclick = close;
+      lb.querySelector(".lb-p").onclick = () => show(cur - 1);
+      lb.querySelector(".lb-nx").onclick = () => show(cur + 1);
+      lb.addEventListener("click", ev => { if (ev.target === lb) close(); });
+      let x0 = null;
+      lb.addEventListener("touchstart", ev => { x0 = ev.touches[0].clientX; }, { passive: true });
+      lb.addEventListener("touchend", ev => {
+        if (x0 === null) return;
+        const dx = ev.changedTouches[0].clientX - x0;
+        if (Math.abs(dx) > 40) show(cur + (dx < 0 ? 1 : -1));
+        x0 = null;
+      });
+      document.addEventListener("keydown", onKey);
+      show(visible().indexOf(t));
+    }));
+  });
+
+  // Видео: только превью и ссылка на YouTube
+  document.querySelectorAll(".vids[data-media]").forEach(box => {
+    const d = JSON.parse(document.getElementById(box.dataset.media).textContent);
+    const esc = s => String(s || "Видео").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+    box.innerHTML = Object.entries(d.vgroups).map(([g, label]) => {
+      const vs = d.videos.filter(v => v.g === g);
+      if (!vs.length) return "";
+      return `<div class="vg"><h3>${label} <span>${vs.length}</span></h3><div class="vg-row">${vs.map(v => `
+        <a class="vcard" href="https://www.youtube.com/watch?v=${v.id}" target="_blank" rel="noopener">
+          <span class="vthumb"><img src="assets/video/almaty/${v.id}.jpg" alt="" loading="lazy"><i>▶</i></span>
+          <span class="vt">${esc(v.t)}</span></a>`).join("")}</div></div>`;
+    }).join("");
+  });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("site-header").outerHTML = header();
   document.getElementById("site-footer").outerHTML = footer();
-  mountChrome(); mountArt(); mountServices(); mountTabs(); mountForms(); mountReveal(); mountSlides(); mountPresent();
+  mountChrome(); mountArt(); mountServices(); mountTabs(); mountForms(); mountReveal(); mountSlides(); mountPresent(); mountMedia();
 });
