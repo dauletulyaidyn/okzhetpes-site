@@ -118,16 +118,24 @@ def render_catalog(d, groups, currency, src):
     print(d['id'],len(groups),'categories;',count,'price rows')
     return f'<section id="catalog" class="catalog"><span class="eyebrow">Услуги и цены · {count} позиций</span><h2>Выберите вид услуг</h2><p class="catalog-note">Красное поле «____ {currency}» — цена уточняется. Состав путёвки и отдельная оплата процедур уточняются при бронировании.</p>'+(f'<p class="catalog-note">{e(src)}</p>' if src else '')+'<nav class="category-nav" aria-label="Виды услуг">'+''.join(links)+'</nav><div class="tariff-groups">'+''.join(sections)+'</div></section>'
 
-def page(title, body, filename, step=1):
+CORP_OUT = ROOT / 'corp'
+
+def page(title, body, filename, step=1, corp=False):
+    out, pre = (CORP_OUT, '../light/') if corp else (OUT, '')
     nav=''.join(f'<a href="{d["id"]}.html" '+('aria-current="page"' if filename.startswith(d['id']) else '')+f'>{d["city"]}</a>' for d in DATA)
+    nav+=('<a href="../light/index.html">Гостям</a>' if corp else '<a href="../corp/index.html">Компаниям</a>')
+    steps=('Выбор филиала','Предложения для компаний','Контакты') if corp else ('Выбор санатория','Услуги санатория','Контакты и расположение')
+    warn='' if corp else '<p>Имеются противопоказания. Необходима консультация врача.</p>'
+    brand_small='Корпоративным клиентам' if corp else 'Сеть здравниц'
     html=f'''<!doctype html>
-<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>{title} · Окжетпес</title><link rel="stylesheet" href="style.css?v=2"></head>
-<body><a class="skip" href="#main">К содержанию</a><header><a class="brand" href="index.html"><b class="mark">О</b><span>Окжетпес<small>Сеть здравниц</small></span></a><nav aria-label="Филиалы">{nav}</nav><button id="fullscreen" type="button">На весь экран ↗</button></header>
-<main id="main">{body}</main><footer><a href="index.html">Все здравницы</a><span class="steps">{'Выбор санатория' if step==1 else 'Услуги санатория' if step==2 else 'Контакты и расположение'} · {step} / 3</span><a href="../index.html">Полная презентация ↗</a><p>Имеются противопоказания. Необходима консультация врача.</p></footer><script src="app.js?v=2"></script></body></html>'''
-    (OUT/filename).write_text(html, encoding='utf-8')
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>{title} · Окжетпес</title><link rel="stylesheet" href="{pre}style.css?v=3"></head>
+<body><a class="skip" href="#main">К содержанию</a><header><a class="brand" href="index.html"><b class="mark">О</b><span>Окжетпес<small>{brand_small}</small></span></a><nav aria-label="Филиалы">{nav}</nav><button id="fullscreen" type="button">На весь экран ↗</button></header>
+<main id="main">{body}</main><footer><a href="index.html">Все филиалы</a><span class="steps">{steps[step-1]} · {step} / 3</span><a href="../index.html">Полная презентация ↗</a>{warn}</footer><script src="{pre}app.js?v=2"></script></body></html>'''
+    out.mkdir(exist_ok=True)
+    (out/filename).write_text(html, encoding='utf-8')
 
 cards=''.join(f'<a class="resort" href="{d["id"]}.html">{image(d)}<div class="card-body"><span class="eyebrow">{d["city"]}</span><h2>{d["name"]}</h2><p>{d["tagline"]}</p><ul>'+''.join(f'<li>{x}</li>' for x in d['features'])+f'</ul><span class="card-link">Услуги и путёвки <b>↗</b></span></div></a>' for d in DATA)
-page('Четыре направления для вашего здоровья', '<section class="intro"><span class="eyebrow">Лечение · восстановление · отдых</span><h1>Четыре курорта.<br><em>Одна забота о вас.</em></h1><p>Здравницы сети «Окжетпес» объединяют санаторное лечение, оздоровление и отдых. Выберите подходящий климат и познакомьтесь с возможностями каждого филиала.</p></section><section class="resorts" aria-label="Выберите санаторий">'+cards+'</section>', 'index.html')
+page('Четыре направления для вашего здоровья', '<section class="intro"><span class="eyebrow">Лечение · восстановление · отдых</span><h1>Четыре курорта.<br><em>Одна забота о вас.</em></h1><p>Здравницы сети «Окжетпес» объединяют санаторное лечение, оздоровление и отдых. Выберите подходящий климат и познакомьтесь с возможностями каждого филиала.</p></section><section class="resorts" aria-label="Выберите санаторий">'+cards+'</section><a class="corp-banner" href="../corp/index.html"><span class="eyebrow">Компаниям и организациям</span><b>Конференц-залы, банкеты, командный отдых — цены в одном месте</b><span class="card-link">Версия для корпоративных клиентов <b>↗</b></span></a>', 'index.html')
 
 for d in DATA:
     notice=f'<p class="notice">{d["notice"]}</p>' if d.get('notice') else ''
@@ -137,4 +145,78 @@ for d in DATA:
     maps='https://www.google.com/maps/search/?api=1&query='+quote(d['name']+' '+d['address'])
     whatsapp=f'<a class="button" href="https://wa.me/{d["wa"]}" target="_blank" rel="noopener">Написать в WhatsApp ↗</a>' if d['wa'] else f'<a class="button" href="mailto:{d["email"]}">Написать в санаторий ↗</a>'
     page('Контакты · '+d['city'],f'<a class="back" href="{d["id"]}.html">← Услуги и путёвки</a><section class="contact-title"><span class="eyebrow">Следующий шаг · {d["city"]}</span><h1>Спланируем<br><em>вашу поездку.</em></h1><p class="lead">{d["name"]}, {d["city"]}. Свяжитесь с санаторием, чтобы уточнить даты, наличие мест и состав путёвки.</p>{notice}</section><section class="contact-grid"><article class="contact"><span class="eyebrow">Бронирование</span><h2>Будем на связи</h2><a class="phone" href="tel:{phone}">{d["phone"]}</a><a class="email" href="mailto:{d["email"]}">{d["email"]}</a>{whatsapp}<p class="hint">Для подбора путёвки сообщите даты, количество гостей и пожелания к отдыху.</p></article><article class="location"><span class="eyebrow">Как нас найти</span><h2>{d["city"]}</h2><address>{d["address"]}</address><p>{d["route"]}</p><a class="button outline" href="{maps}" target="_blank" rel="noopener">Открыть на карте ↗</a><a class="source" href="{d["source"]}" target="_blank" rel="noopener">Контакты на официальном сайте ↗</a></article></section><p class="verified">Контакты сверены с официальным сайтом 10 ноября 2026 года.</p>',d['id']+'-contacts.html',3)
-print('Built 9 pages in', OUT)
+# ---------- Версия для корпоративных клиентов (corp/): те же 3 шага, по филиалам только то, что важно компаниям ----------
+# (раздел, [(группа прейскуранта, фильтр строк: None = все, иначе функция по названию)])
+has = lambda *w: (lambda n: any(x.casefold() in n.casefold() for x in w))
+hasnt = lambda *w: (lambda n: not any(x.casefold() in n.casefold() for x in w))
+CORP = {
+ 'almaty': [
+  ('Проживание', [('Standart', has('Командировочный'))]),
+  ('Конференц-залы и площадки', [('Залы и площадки', None)]),
+  ('Кофе-брейки и банкеты', [('Кофе-брейки и питание гостей', None), ('Банкетные пакеты', None)]),
+  ('Командный отдых', [('SPA-зона: финская и русская сауны, мини-бассейн', has('Группа', 'группа')), ('Досуг', has('Спортплощадка', 'Фотосессия'))]),
+ ],
+ 'burabay': [
+  ('Конференц-залы', [('Залы и мероприятия', hasnt('бракосочетание'))]),
+  ('Питание группы', [('Питание отдыхающих (средняя стоимость)', has('Взрослый'))]),
+  ('Командный отдых и трансфер', [('Активный отдых', None), ('Трансфер и прачечная', has('Трансфер'))]),
+ ],
+ 'essentuki': [
+  ('Проживание без лечения', [(g, hasnt('доп. место', 'ребёнок')) for g in ['Только проживание', 'Проживание + питание (без лечения)']]),
+  ('Питание группы', [('Питание', has('Взрослый', 'Экспресс'))]),
+  ('Командный отдых и трансфер', [('Досуг', has('командная', 'Аренда зала')), ('Трансфер и минеральная вода', has('трансфер'))]),
+ ],
+}
+# Проживание без лечения есть не во всех прейскурантах — там, где его нет, только пометка
+CORP_NOTE = {
+ 'almaty': 'Номера по прейскуранту продаются как путёвки с лечением; для командировок — тариф «Командировочный». Проживание групп без лечения — по запросу.',
+ 'burabay': 'Номера по прейскуранту продаются как путёвки с лечением. Проживание групп без лечения — по запросу.',
+}
+CORP_CUR = {'almaty': '₸', 'burabay': '₸', 'essentuki': '₽'}
+
+def corp_row(title, note, amount):
+    price = e(amount) if amount else '____ ' + CORP_CUR_NOW
+    status = 'published' if amount else 'unfilled'
+    return f'<li class="tariff-row"><div><span class="tariff-name">{e(title)}</span>' + (f'<small>{e(note)}</small>' if note else '') + f'</div><span class="tariff-price {status}">{price}</span></li>'
+
+def corp_catalog(d):
+    global CORP_CUR_NOW
+    rid = d['id']
+    if rid not in CORP:
+        return '<section id="catalog" class="catalog"><span class="eyebrow">Для компаний</span><h2>Предварительные заявки</h2><p class="catalog-note">Филиал открывается в 2026 году. Принимаем предварительные заявки на выездные мероприятия и размещение групп; цены по запросу.</p></section>', 0
+    CORP_CUR_NOW = CORP_CUR[rid]
+    groups = dict(official_groups(rid)[0])
+    blocks, links, total = [], [], 0
+    for i, (title, parts) in enumerate(CORP[rid]):
+        anchor = f'category-{i+1}'
+        body = []
+        for gname, flt in parts:
+            rows = [r for r in groups[gname] if flt is None or flt(r[0])]
+            total += len(rows)
+            if len(parts) > 1:
+                body.append(f'<li class="tariff-sub">{e(gname)}</li>')
+            body += [corp_row(*r) for r in rows]
+        links.append(f'<a href="#{anchor}">{e(title)}</a>')
+        blocks.append(f'<section class="tariff-group" id="{anchor}"><h2>{e(title)}</h2><ul class="tariff-list">' + ''.join(body) + '</ul><a class="to-categories" href="#catalog">К разделам ↑</a></section>')
+    note = f'<p class="catalog-note">{CORP_NOTE[rid]}</p>' if rid in CORP_NOTE else ''
+    html = (f'<section id="catalog" class="catalog"><span class="eyebrow">Для компаний · {total} позиций</span><h2>Выберите раздел</h2>'
+            f'<p class="catalog-note">Цены по прейскуранту 2026. Красное поле «____ {CORP_CUR_NOW}» — цена уточняется. Условия договора и скидки за объём — индивидуально.</p>{note}'
+            '<nav class="category-nav" aria-label="Разделы">' + ''.join(links) + '</nav><div class="tariff-groups">' + ''.join(blocks) + '</div></section>')
+    return html, total
+
+def corp_features(d):
+    return [t for t, _ in CORP[d['id']]] if d['id'] in CORP else ['Выездные мероприятия', 'Размещение групп', 'Предварительные заявки']
+
+corp_total = 0
+cards = ''.join(f'<a class="resort" href="{d["id"]}.html">{image(d)}<div class="card-body"><span class="eyebrow">{d["city"]}</span><h2>{d["name"]}</h2><ul>' + ''.join(f'<li>{x}</li>' for x in corp_features(d)) + '</ul><span class="card-link">Предложения для компаний <b>↗</b></span></div></a>' for d in DATA)
+page('Корпоративным клиентам', '<section class="intro"><span class="eyebrow">Компаниям и организациям</span><h1>Четыре филиала.<br><em>Для вашей команды.</em></h1><p>Конференц-залы, кофе-брейки и банкеты, питание групп, командный отдых, трансфер и проживание. Выберите филиал — покажем только то, что нужно компаниям, с ценами по прейскуранту 2026.</p></section><section class="resorts" aria-label="Выберите филиал">' + cards + '</section>', 'index.html', 1, corp=True)
+for d in DATA:
+    cat, n = corp_catalog(d)
+    corp_total += n
+    page(d['name'] + ' · ' + d['city'] + ' · Компаниям', f'<a class="back" href="index.html">← Все филиалы</a><section class="resort-hero"><div><span class="eyebrow">{d["place"]}</span><h1>{d["name"]}<br><em>{d["city"]}</em></h1><p class="lead">Для компаний: ' + ', '.join(x.lower() for x in corp_features(d)) + '.</p><div class="tags">' + ''.join(f'<span>{x}</span>' for x in corp_features(d)) + f'</div></div>{image(d, "hero-image")}</section>{cat}<div class="next"><p>Сообщите даты, количество участников и формат — подготовим предложение.</p><a class="button" href="{d["id"]}-contacts.html">Контакты →</a></div>', d['id'] + '.html', 2, corp=True)
+    phone = ''.join(c for c in d['phone'] if c.isdigit() or c == '+')
+    maps = 'https://www.google.com/maps/search/?api=1&query=' + quote(d['name'] + ' ' + d['address'])
+    whatsapp = f'<a class="button" href="https://wa.me/{d["wa"]}" target="_blank" rel="noopener">Написать в WhatsApp ↗</a>' if d['wa'] else f'<a class="button" href="mailto:{d["email"]}">Написать в филиал ↗</a>'
+    page('Контакты · ' + d['city'] + ' · Компаниям', f'<a class="back" href="{d["id"]}.html">← Предложения для компаний</a><section class="contact-title"><span class="eyebrow">Следующий шаг · {d["city"]}</span><h1>Обсудим<br><em>ваше мероприятие.</em></h1><p class="lead">{d["name"]}, {d["city"]}. Свяжитесь с филиалом, чтобы уточнить даты, количество участников и формат.</p></section><section class="contact-grid"><article class="contact"><span class="eyebrow">Корпоративные заявки</span><h2>Будем на связи</h2><a class="phone" href="tel:{phone}">{d["phone"]}</a><a class="email" href="mailto:{d["email"]}">{d["email"]}</a>{whatsapp}<p class="hint">Для предложения сообщите компанию, даты, количество участников и что нужно: зал, питание, проживание, трансфер.</p></article><article class="location"><span class="eyebrow">Как нас найти</span><h2>{d["city"]}</h2><address>{d["address"]}</address><p>{d["route"]}</p><a class="button outline" href="{maps}" target="_blank" rel="noopener">Открыть на карте ↗</a><a class="source" href="{d["source"]}" target="_blank" rel="noopener">Контакты на официальном сайте ↗</a></article></section>', d['id'] + '-contacts.html', 3, corp=True)
+print('corp:', corp_total, 'price rows')
+print('Built light/ (9 pages) and corp/ (9 pages)')
