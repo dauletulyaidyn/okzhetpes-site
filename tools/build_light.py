@@ -21,10 +21,38 @@ def image(d, cls=''):
         return f'<img class="{cls}" src="../assets/photos/{d["photo"]}" alt="{e(d["name"])} — {d["city"]}" width="900" height="600">'
     return '<div class="lake '+cls+'" role="img" aria-label="Стилизованный пейзаж Иссык-Куля"><span>Иссык-Куль</span><small>Горный воздух · озёрный простор</small></div>'
 
+def official_groups(rid):
+    """Утверждённый прейскурант 2026 (tools/prices/<id>.py), если он есть."""
+    import importlib.util
+    f = ROOT / 'tools' / 'prices' / (rid + '.py')
+    if not f.exists():
+        return None
+    spec = importlib.util.spec_from_file_location('p_' + rid.replace('-', '_'), f)
+    m = importlib.util.module_from_spec(spec); spec.loader.exec_module(m)
+    D = m.DATA
+    money = lambda v, c: None if v is None else f"{v:,}".replace(',', ' ') + ' ' + c
+    groups = []
+    for tab in D['tabs']:
+        for g in tab['groups']:
+            rows = []
+            for name, unit, *pr in g['items']:
+                if D.get('dual'):  # Ессентуки: руб. и тенге (руб. × 5)
+                    rows.append((name, unit + (' · ' + money(pr[0] * 5, '₸') if pr[0] is not None else ''), money(pr[0], '₽')))
+                elif g.get('cols'):
+                    for col, v in zip(g['cols'], pr):
+                        rows.append((name, unit + ' · ' + col, money(v, D['cur'])))
+                else:
+                    rows.append((name, unit, money(pr[0], D['cur'])))
+            groups.append((g['g'], rows))
+    return groups, D['src']
+
 def catalog(d):
     """Reuse every catalog entry from the full site; never invent a tariff."""
     soup = BeautifulSoup((ROOT / (d['id']+'.html')).read_text(encoding='utf-8'), 'html.parser')
     currency = {'almaty':'₸', 'burabay':'₸', 'issyk-kul':'сом', 'essentuki':'₽'}[d['id']]
+    off = official_groups(d['id'])
+    if off:
+        return render_catalog(d, off[0], currency, off[1])
     groups = []
     packs = []
     for pack in soup.select('.pack'):
@@ -71,6 +99,9 @@ def catalog(d):
             known.add(name.casefold())
     if extra:
         groups.append(('Инфраструктура и дополнительные возможности',extra))
+    return render_catalog(d, groups, currency, None)
+
+def render_catalog(d, groups, currency, src):
     links=[]
     sections=[]
     for i,(name,rows) in enumerate(groups):
@@ -80,12 +111,12 @@ def catalog(d):
         for title,note,amount in rows:
             price=e(amount) if amount else '____ '+currency
             status='published' if amount else 'unfilled'
-            label='Цена из полной презентации' if amount else 'Цена не заполнена'
+            label=('Цена по прейскуранту' if src else 'Цена из полной презентации') if amount else 'Цена не заполнена'
             items.append(f'<li class="tariff-row"><div><span class="tariff-name">{e(title)}</span>'+ (f'<small>{e(note)}</small>' if note else '')+f'</div><span class="tariff-price {status}" aria-label="{label}: {price}">{price}</span></li>')
         sections.append(f'<section class="tariff-group" id="{anchor}"><h2>{e(name)}</h2><ul class="tariff-list">'+''.join(items)+'</ul><a class="to-categories" href="#catalog">К категориям ↑</a></section>')
     count=sum(len(rows) for _,rows in groups)
     print(d['id'],len(groups),'categories;',count,'price rows')
-    return f'<section id="catalog" class="catalog"><span class="eyebrow">Услуги и цены · {count} позиций</span><h2>Выберите вид услуг</h2><p class="catalog-note">Красное поле «____ {currency}» — цена ещё не заполнена. Состав путёвки и отдельная оплата процедур уточняются при бронировании.</p>'+('<p class="catalog-note">Числовые цены перенесены из полной презентации по данным на 9 ноября 2026 года; актуальную стоимость подтверждает санаторий.</p>' if d['id']=='essentuki' else '')+'<nav class="category-nav" aria-label="Виды услуг">'+''.join(links)+'</nav><div class="tariff-groups">'+''.join(sections)+'</div></section>'
+    return f'<section id="catalog" class="catalog"><span class="eyebrow">Услуги и цены · {count} позиций</span><h2>Выберите вид услуг</h2><p class="catalog-note">Красное поле «____ {currency}» — цена уточняется. Состав путёвки и отдельная оплата процедур уточняются при бронировании.</p>'+(f'<p class="catalog-note">{e(src)}</p>' if src else '')+'<nav class="category-nav" aria-label="Виды услуг">'+''.join(links)+'</nav><div class="tariff-groups">'+''.join(sections)+'</div></section>'
 
 def page(title, body, filename, step=1):
     nav=''.join(f'<a href="{d["id"]}.html" '+('aria-current="page"' if filename.startswith(d['id']) else '')+f'>{d["city"]}</a>' for d in DATA)

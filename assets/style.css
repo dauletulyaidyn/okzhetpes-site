@@ -569,3 +569,31 @@ html.present-mode body > section > .wrap { width: 100%; }
 html.present-mode .pickbar-wrap { display: none; }
 html.present-mode .draft, html.present-mode .float-cta, html.present-mode .dots { display: none; }
 html.present-mode .hero.hero-compact { height: 100vh; min-height: 100vh; }
+
+/* утверждённый прейскурант: вкладки, поиск, прокрутка внутри блока */
+.pl-bar { display: flex; align-items: flex-end; gap: 18px; flex-wrap: wrap; border-bottom: 1px solid var(--line); margin-bottom: 0; }
+.pl-bar .seg-tabs { margin: 0; border: 0; flex: 1; }
+.pl-search { font: 400 14px var(--sans); padding: 12px 14px; border: 1px solid var(--line); background: rgba(255,255,255,.6); color: var(--ink); min-width: 240px; margin-bottom: 8px; }
+.pl-body { max-height: 64vh; overflow: auto; border: 1px solid var(--line); border-top: 0; background: rgba(255,255,255,.35); overscroll-behavior: contain; }
+.pl-pane { display: none; columns: 2 460px; column-gap: 0; }
+.pl-pane.on { display: block; }
+.pl-group { break-inside: avoid; padding: 22px 26px 12px; border-bottom: 1px solid var(--line); border-right: 1px solid var(--line); }
+.pl-group h4 { font: 400 22px/1.15 var(--display); margin: 0 0 10px; }
+.pl-row { display: flex; align-items: baseline; gap: 10px; padding: 7px 0; border-top: 1px solid var(--line); font-size: 14px; }
+.pl-row .nm { flex: 1; min-width: 0; }
+.pl-row .un { width: 74px; flex: none; color: var(--mute); font-size: 12px; text-align: right; }
+.pl-row .pr { width: 104px; flex: none; text-align: right; font-weight: 600; white-space: nowrap; }
+.pl-row .pr.empty { text-align: center; }
+.pl-hd { border-top: 0; padding: 0 0 4px; font: 600 9px var(--sans); letter-spacing: .18em; text-transform: uppercase; color: var(--brass); }
+.pl-hd .pr { font-weight: 600; }
+.pl-none { padding: 28px; color: var(--mute); }
+.pl-src { margin: 14px 0 0; font-size: 12px; color: var(--mute); }
+@media (max-width: 600px) {
+  .pl-search { min-width: 0; width: 100%; }
+  .pl-group { padding: 18px 16px 10px; border-right: 0; }
+  .pl-row { flex-wrap: wrap; }
+  .pl-row .nm { flex-basis: 100%; }
+  .pl-row .un { width: auto; flex: 1; text-align: left; }
+  .pl-hd { display: none; }
+}
+.pl-row[hidden], .pl-group[hidden] { display: none; }

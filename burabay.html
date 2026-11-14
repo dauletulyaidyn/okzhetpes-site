@@ -8,7 +8,7 @@
 <meta name="description" content="Санаторий «Окжетпес» в национальном парке Бурабай: лечение органов дыхания, ЖКТ и обмена веществ, кумыс, минеральная вода, бассейн и хамам. Круглый год.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,600;0,6..96,700;1,6..96,400&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/style.css?v=23">
+<link rel="stylesheet" href="assets/style.css?v=26">
 </head>
 <body>
 <div id="site-header"></div>
@@ -58,16 +58,14 @@
   </div>
 </section>
 
-<section class="alt" id="services">
+<section class="alt" id="prices">
   <div class="wrap">
     <div class="svc-head rv">
-      <div><span class="eyebrow">Прайс-лист</span><h2>Все услуги «Окжетпес»</h2>
-        <p class="lead">Более 50 видов медицинских услуг. Процедуры подбирает врач по показаниям.</p></div>
-      <div class="svc-legend"><span class="pr empty">____ ₸</span><span data-count-for="svc-burabay">цена не заполнена</span></div>
+      <div><span class="eyebrow">Прейскурант 2026</span><h2>Цены «Окжетпес»</h2>
+        <p class="lead">Путёвки по сезонам, медицинские услуги, питание и досуг — по утверждённому прейскуранту. Процедуры назначает врач.</p></div>
     </div>
-    <div class="svc-cols" data-services="svc-burabay"></div>
+    <div class="rv" data-prices="burabay"></div>
   </div>
-  <script type="application/json" id="svc-burabay">[{"g": "Природные лечебные факторы", "items": ["Радонотерапия (собственный радоновый источник)", "Минеральная вода озера Майбалык", "Иловая грязь озера Балпаш-Сор", "Кумысолечение", "Климато- и аэротерапия"]}, {"g": "Бальнеолечение", "items": ["Лечебные ванны (различные виды)", "Лечебные души"]}, {"g": "Теплолечение", "items": ["Грязелечение", "Лечение озокеритом"]}, {"g": "Физиолечение", "items": ["Электрофорез", "Магнитотерапия", "Лазеротерапия", "УВЧ", "ДДТ", "Светолечение"]}, {"g": "Общеукрепляющие процедуры", "items": ["Ингаляции", "Спелеотерапия", "Галотерапия (соляная пещера)", "Механический массаж", "Фитотерапия", "Кислородный коктейль", "ЛФК", "Лечебные массажи"]}, {"g": "Wellness & SPA", "items": ["Бассейн", "Сауна", "Хамам", "Инфракрасная сауна", "Тренажёрный зал"]}, {"g": "Комната сенсорной разгрузки", "items": ["Аудиомедитации", "Лечебные настрои", "Тренинги с психологом"]}, {"g": "Водородная терапия", "items": ["Водородные ванны", "Водородные ингаляции"]}, {"g": "Пантолечение", "items": ["Пантовые ванны", "Пантопаросауна", "Пантовые маски", "Пантогематоген"]}, {"g": "Лечение нафталаном", "items": ["Ванны с биотонусом Нафталан", "Нафталановые аппликации"]}, {"g": "Современная аппаратная терапия", "items": ["Диагностика всего организма с ИИ", "Трон Кегеля", "RF-лифтинг Vella Shape", "Биоэнергомассаж", "ВЛОК-терапия"]}, {"g": "Медикаментозные комплексы", "items": ["«Здоровый позвоночник»", "«Активное долголетие»", "«Инновационное омоложение»", "«Хронические заболевания лёгких»", "«Синдром хронической усталости»", "«Сахарный диабет»", "«Улучшение мозгового кровообращения»", "«Здоровое сердце»"]}, {"g": "Досуг", "items": ["Коворкинг", "Кинозал", "Бильярд", "Концерты", "Зимние развлечения", "Летние развлечения"]}]</script>
 </section>
 
 <section id="programs">
@@ -95,10 +93,8 @@
   <div class="wrap grid-2">
     <div class="rv"><span class="eyebrow">Проживание</span><h2>Номерной фонд</h2>
       <p class="lead">248 койко-мест, безбарьерная среда, территория для прогулок и досуга. Для корпоративных клиентов — персональные скидки и специальные условия по договору.</p>
-      <div class="svc-legend" style="display:inline-flex"><span class="pr empty">____ ₸</span><span data-count-for="svc-rooms">цена не заполнена</span></div></div>
-    <div class="rv" data-services="svc-rooms"></div>
+      <a class="btn btn-ghost" href="#prices" style="margin-top:20px">Цены на путёвки</a></div>
   </div>
-  <script type="application/json" id="svc-rooms">[{"g": "Номерной фонд", "note": "за сутки / путёвку — уточнить", "cols": ["SGL", "DBL"], "items": ["Standart", "Standart De Luxe", "Junior Suite", "Suite", "Family room", "Suite De Luxe"]}]</script>
 </section>
 
 <section>
@@ -112,6 +108,7 @@
 
 <div id="lead-slot" data-resort="Бурабай"></div>
 <div id="site-footer"></div>
-<script src="assets/site.js?v=23"></script>
+<script src="assets/prices/burabay.js?v=26"></script>
+<script src="assets/site.js?v=26"></script>
 </body>
 </html>

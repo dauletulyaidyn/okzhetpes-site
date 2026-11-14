@@ -214,6 +214,55 @@ function mountServices() {
   });
 }
 
+/* ---------- Утверждённый прейскурант 2026 (данные: assets/prices/<id>.js → window.PRICES) ---------- */
+function mountPrices() {
+  const fmt = n => String(n).replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+  const esc = t => String(t).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  document.querySelectorAll("[data-prices]").forEach(box => {
+    const d = (window.PRICES || {})[box.dataset.prices];
+    if (!d) return;
+    const cell = (v, cur) => v == null
+      ? `<span class="pr empty" title="Цена уточняется">____ ${cur}</span>`
+      : `<span class="pr">${fmt(v)} ${cur}</span>`;
+    let total = 0, empty = 0;
+    const tabs = d.tabs.map((t, ti) => {
+      const groups = t.groups.map(g => {
+        const cols = g.cols || [d.cur];
+        const head = `<div class="pl-row pl-hd"><span class="nm"></span><span class="un">ед.</span>${cols.map(c => `<span class="pr">${esc(c)}</span>`).join("")}</div>`;
+        const rows = g.items.map(([nm, un, ...pr]) => {
+          total += 1;
+          const curs = g.curs || cols.map(() => d.cur);
+          const cells = cols.map((_, i) => { if (pr[i] == null) empty += 1; return cell(pr[i], curs[i]); }).join("");
+          return `<div class="pl-row" data-q="${esc((nm + " " + g.g).toLowerCase())}"><span class="nm">${esc(nm)}</span><span class="un">${esc(un || "")}</span>${cells}</div>`;
+        }).join("");
+        return `<div class="pl-group"><h4>${esc(g.g)}</h4>${head}${rows}</div>`;
+      }).join("");
+      return `<div class="pl-pane${ti ? "" : " on"}" data-pane="${ti}">${groups}</div>`;
+    }).join("");
+    box.innerHTML = `
+      <div class="pl-bar">
+        <div class="seg-tabs pl-tabs">${d.tabs.map((t, i) => `<button type="button" data-tab="${i}" class="${i ? "" : "on"}">${esc(t.t)}</button>`).join("")}</div>
+        <input class="pl-search" type="search" placeholder="Поиск услуги…" aria-label="Поиск по прейскуранту">
+      </div>
+      <div class="pl-body">${tabs}<p class="pl-none" hidden>Ничего не найдено — уточните у менеджера.</p></div>
+      <p class="pl-src">${esc(d.src)}${empty ? ` · <span class="pr empty">____</span> — цена уточняется (${empty} из ${total})` : ""}</p>`;
+    const panes = [...box.querySelectorAll(".pl-pane")], btns = [...box.querySelectorAll(".pl-tabs button")];
+    const q = box.querySelector(".pl-search"), none = box.querySelector(".pl-none");
+    let cur = 0;
+    const apply = () => {
+      const v = q.value.trim().toLowerCase();
+      panes.forEach((p, i) => p.classList.toggle("on", v ? true : i === cur));
+      btns.forEach((b, i) => b.classList.toggle("on", !v && i === cur));
+      let hits = 0;
+      box.querySelectorAll(".pl-row:not(.pl-hd)").forEach(r => { const ok = !v || r.dataset.q.includes(v); r.hidden = !ok; if (ok) hits++; });
+      box.querySelectorAll(".pl-group").forEach(g => { g.hidden = !g.querySelector(".pl-row:not(.pl-hd):not([hidden])"); });
+      none.hidden = hits > 0;
+    };
+    btns.forEach((b, i) => b.addEventListener("click", () => { cur = i; q.value = ""; apply(); }));
+    q.addEventListener("input", apply);
+  });
+}
+
 /* ---------- Режим презентации: один жест = один блок ---------- */
 function mountSlides() {
   const wide = () => matchMedia("(min-width: 900px) and (min-height: 620px)").matches;
@@ -259,7 +308,7 @@ function mountSlides() {
   }
   window.addEventListener("wheel", e => {
     if (!wide() || e.ctrlKey || Math.abs(e.deltaY) < 4) return;
-    if (e.target.closest("textarea, select, .terms")) return;
+    if (e.target.closest("textarea, select, .terms, .pl-body")) return;
     const dir = e.deltaY > 0 ? 1 : -1;
     if (innerRoom(dir)) return;          // сначала долистываем длинный блок
     e.preventDefault();
@@ -447,5 +496,5 @@ function mountPick() {
 document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("site-header").outerHTML = header();
   document.getElementById("site-footer").outerHTML = footer();
-  mountChrome(); mountArt(); mountServices(); mountTabs(); mountForms(); mountReveal(); mountSlides(); mountPresent(); mountMedia(); mountPick();
+  mountChrome(); mountArt(); mountServices(); mountPrices(); mountTabs(); mountForms(); mountReveal(); mountSlides(); mountPresent(); mountMedia(); mountPick();
 });
